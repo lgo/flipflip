@@ -25,13 +25,13 @@ class ModelEnv(Environment):
 
     def __init__(self, world):
         self.world = world
-        self.lastobs = 5.0
+        self.lastobs = [1000.0]
 
     def getSensors(self):
         # data = [self.world.closest_square(), self.world.player().y]
         # return data
-        data = [self.world.closest_square()]
-        print("Range: %s" % self.world.closest_square())
+        data = [int(self.world.closest_square())]
+        print("Range: %s" % data[0])
         return asarray(data)
 
     def performAction(self, action):
@@ -51,11 +51,11 @@ class ModelEnv(Environment):
 class ModelTask(Task):
     def __init__(self, env):
         self.env = env
-        self.lastobs = 6.0
+        self.lastobs = [1000.0]
         self.sensor_limits = None
         self.actor_limits = None
         self.clipping = True
-        self.lastreward = 6.0
+        self.lastreward = 0
 
     def getObservation(self):
         return self.env.getSensors()

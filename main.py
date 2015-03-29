@@ -122,4 +122,4 @@ while 1:
 
     if LEARN:
         agent.learn()
-        agent.reset()
+        # agent.reset()
