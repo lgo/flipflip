@@ -37,14 +37,11 @@ class World(object):
     def player(self):
         return player
 
-    def distance(self, obstacle):
-        return obstacle.x - player.x - player.width
-
-    def all_distances(self):
-        distances = map(lambda x: self.distance(x), obstacles)
-        needed = 8 - len(distances)
-        distances = distances + [1000 for x in range(needed)]
-        return distances
+    def closest_square(self):
+        if len(obstacles) > 0:
+            return obstacles[0].x - player.x - player.width
+        else:
+            return width - player.x - player.width
 
     def reset(self):
         obstacles = []
@@ -67,7 +64,7 @@ experiment = Experiment(task, agent)
 
 while 1:
     # delta is time since last frame (in seconds)
-    delta = clock.tick(20) / 1000.0
+    delta = clock.tick(30) / 1000.0
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -124,5 +121,5 @@ while 1:
     obstacles = filter(lambda x: not x.gone, obstacles)
 
     if LEARN:
-        agent.learn(1)
-        # agent.reset()
+        agent.learn()
+        agent.reset()
